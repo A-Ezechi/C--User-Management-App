@@ -12,3 +12,4 @@
 /Users/aezechi/C# Bootcamp/C# Tutorial/obj/Debug/net8.0/C# Tutorial.pdb
 /Users/aezechi/C# Bootcamp/C# Tutorial/obj/Debug/net8.0/C# Tutorial.genruntimeconfig.cache
 /Users/aezechi/C# Bootcamp/C# Tutorial/obj/Debug/net8.0/ref/C# Tutorial.dll
+/Users/aezechi/C# Bootcamp/C# Tutorial/obj/Debug/net8.0/C# Tutorial.sourcelink.json
