@@ -33,9 +33,9 @@ namespace ConsoleApp1
             };
         }
 
-        public class Functionality // Functionality class to store the functions of the program
+        public class Options // Options class to store the options of the program
         {
-            public Dictionary<int, string> Functions = new Dictionary<int, string>
+            public Dictionary<int, string> options = new Dictionary<int, string>
             {
                 {1, "View All Users"},
                 {2, "Add User"},
@@ -57,19 +57,18 @@ namespace ConsoleApp1
 
             Console.WriteLine("Please select an option: ");
 
-            AddUser();
         }
 
         public static void DisplayOptions() // DisplayOptions method to display the options of the program
         {
-            Functionality functions = new Functionality();
-            foreach (var function in functions.Functions)
+            Options options = new Options();
+            foreach (var option in options.options)
             {
-                Console.WriteLine($"{function.Key}. {function.Value}");
+                Console.WriteLine($"{option.Key}. {option.Value}");
             }
         }
 
-        public static void ViewUsers()
+        public static void ViewUsers() // ViewUsers method to view all the users of the program
         {
             Users users = new Users();
             foreach (var user in users.users)
@@ -78,7 +77,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void AddUser()
+        public static void AddUser() // AddUser method to add a user to the program
         {
             Users users = new Users();
 
@@ -114,7 +113,7 @@ namespace ConsoleApp1
                 }
             }
 
-            if (users.users.ContainsKey(id)) // Check if the user already exists
+            if (users.users.ContainsKey(id)) // Check if the user already exists with their id key
             {
                 Console.WriteLine("User already exists!");
             }
@@ -125,10 +124,43 @@ namespace ConsoleApp1
             }
         }
 
-        public static void RemoveUser()
+        public static void RemoveUser()  // RemoveUser method to remove a user from the program
         {
-            
+            Users users = new Users();
+
+            int deletedUserID;
+
+            while (true)
+            {
+                Console.WriteLine("Please enter the ID of the user you would like to delete: ");
+
+                if (int.TryParse(Console.ReadLine(), out deletedUserID))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid ID.");
+                }
+            }
+
+            if (users.users.ContainsKey(deletedUserID))
+            {
+                users.users.TryGetValue(deletedUserID, out string? deletedUser);
+
+                users.users.Remove(deletedUserID);
+
+                Console.WriteLine($"User: {deletedUser} removed successfully!");
+
+                ViewUsers();
+            }
+            else
+            {
+                Console.WriteLine("User does not exist!");
+            }
         }
+
+
     }       
 }
 
