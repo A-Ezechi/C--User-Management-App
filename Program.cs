@@ -1,50 +1,7 @@
-using System;
-using System.Collections.Generic;
-
 namespace ConsoleApp1
 {
     public class Program
     {
-        public class Users // Users class to store the users of the program
-        {
-            public Dictionary<int, string> users = new Dictionary<int, string>
-            {
-                {1, "Alex"},
-                {2, "Blake"},
-                {3, "Charlie"},
-                {4, "Drew"},
-                {5, "Eli"},
-                {6, "Frank"},
-                {7, "Gale"},
-                {8, "Hunter"},
-                {9, "Izzy"},
-                {10, "Jordan"},
-                {11, "Kai"},
-                {12, "Lee"},
-                {13, "Morgan"},
-                {14, "Pat"},
-                {15, "Quinn"},
-                {16, "Riley"},
-                {17, "Sam"},
-                {18, "Taylor"},
-                {19, "Tyler"},
-                {20, "Val"}
-            };
-        }
-
-        public class Options // Options class to store the options of the program
-        {
-            public Dictionary<int, string> options = new Dictionary<int, string>
-            {
-                {1, "View All Users"},
-                {2, "Add User"},
-                {3, "Edit User"},
-                {4, "Search User"},
-                {5, "Remove User"},
-                {6, "Exit"}
-            };
-        }
-
         static Users users = new Users(); // Shared instance of Users
 
         static void Main()
@@ -56,7 +13,7 @@ namespace ConsoleApp1
 
             while (true)
             {
-                DisplayOptions();
+                Functions.DisplayOptions();
                 Console.WriteLine("Please select an option: ");
                 
                 int option;
@@ -65,22 +22,22 @@ namespace ConsoleApp1
                     switch (option)
                     {
                         case 1:
-                            ViewUsers();
+                            Functions.ViewUsers(users);
                             break;
                         case 2:
-                            AddUser();
+                            Functions.AddUser(users);
                             break;
                         case 3:
-                            EditUser();
+                            Functions.EditUser(users);
                             break;
                         case 4:
-                            SearchUser();
+                            Functions.SearchUser(users);
                             break;
                         case 5:
-                            RemoveUser();
+                            Functions.RemoveUser(users);
                             break;
                         case 6:
-                            Exit();
+                            Functions.Exit();
                             break;
                         default:
                             Console.WriteLine("Invalid option. Please select a valid option.");
@@ -93,7 +50,10 @@ namespace ConsoleApp1
                 }
             }
         }
+    }
 
+    public static class Functions
+    {
         public static void DisplayOptions()
         {
             Options options = new Options();
@@ -103,7 +63,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void ViewUsers()
+        public static void ViewUsers(Users users)
         {
             foreach (var user in users.users)
             {
@@ -111,7 +71,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void AddUser()
+        public static void AddUser(Users users)
         {
             string newUser;
             int id;
@@ -155,7 +115,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void RemoveUser()
+        public static void RemoveUser(Users users)
         {
             int deletedUserID;
 
@@ -184,7 +144,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void SearchUser()
+        public static void SearchUser(Users users)
         {
             int foundUserID;
 
@@ -210,7 +170,7 @@ namespace ConsoleApp1
             }
         }
 
-        public static void EditUser()
+        public static void EditUser(Users users)
         {
             int editedUserID;
 
