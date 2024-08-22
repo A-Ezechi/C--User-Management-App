@@ -1,6 +1,5 @@
-
-using System.Formats.Asn1;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
@@ -46,6 +45,8 @@ namespace ConsoleApp1
             };
         }
 
+        static Users users = new Users(); // Shared instance of Users
+
         static void Main()
         {
             Console.WriteLine("Please enter your name: ");
@@ -53,13 +54,47 @@ namespace ConsoleApp1
 
             Console.WriteLine($"Welcome to my management system {name}!");
 
-            DisplayOptions();
-
-            Console.WriteLine("Please select an option: ");
-
+            while (true)
+            {
+                DisplayOptions();
+                Console.WriteLine("Please select an option: ");
+                
+                int option;
+                if (int.TryParse(Console.ReadLine(), out option))
+                {
+                    switch (option)
+                    {
+                        case 1:
+                            ViewUsers();
+                            break;
+                        case 2:
+                            AddUser();
+                            break;
+                        case 3:
+                            EditUser();
+                            break;
+                        case 4:
+                            SearchUser();
+                            break;
+                        case 5:
+                            RemoveUser();
+                            break;
+                        case 6:
+                            Exit();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Please select a valid option.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
         }
 
-        public static void DisplayOptions() // DisplayOptions method to display the options of the program
+        public static void DisplayOptions()
         {
             Options options = new Options();
             foreach (var option in options.options)
@@ -68,22 +103,18 @@ namespace ConsoleApp1
             }
         }
 
-        public static void ViewUsers() // ViewUsers method to view all the users of the program
+        public static void ViewUsers()
         {
-            Users users = new Users();
             foreach (var user in users.users)
             {
                 Console.WriteLine($"{user.Key}. {user.Value}");
             }
         }
 
-        public static void AddUser() // AddUser method to add a user to the program
+        public static void AddUser()
         {
-            Users users = new Users();
-
             string newUser;
             int id;
-
 
             while (true)
             {
@@ -99,7 +130,7 @@ namespace ConsoleApp1
                     Console.WriteLine("Invalid input. Please enter a valid name.");
                 }
             }
-            
+
             while (true)
             {
                 Console.WriteLine("Please enter the ID of the user: ");
@@ -113,7 +144,7 @@ namespace ConsoleApp1
                 }
             }
 
-            if (users.users.ContainsKey(id)) // Check if the user already exists with their id key
+            if (users.users.ContainsKey(id))
             {
                 Console.WriteLine("User already exists!");
             }
@@ -124,16 +155,13 @@ namespace ConsoleApp1
             }
         }
 
-        public static void RemoveUser()  // RemoveUser method to remove a user from the program
+        public static void RemoveUser()
         {
-            Users users = new Users();
-
             int deletedUserID;
 
             while (true)
             {
                 Console.WriteLine("Please enter the ID of the user you would like to delete: ");
-
                 if (int.TryParse(Console.ReadLine(), out deletedUserID))
                 {
                     break;
@@ -147,12 +175,8 @@ namespace ConsoleApp1
             if (users.users.ContainsKey(deletedUserID))
             {
                 users.users.TryGetValue(deletedUserID, out string? deletedUser);
-
                 users.users.Remove(deletedUserID);
-
                 Console.WriteLine($"User: {deletedUser} removed successfully!");
-
-                ViewUsers();
             }
             else
             {
@@ -160,18 +184,65 @@ namespace ConsoleApp1
             }
         }
 
+        public static void SearchUser()
+        {
+            int foundUserID;
 
-    }       
+            while (true)
+            {
+                Console.WriteLine("Please enter the ID of the user you would like to search for: ");
+                if (int.TryParse(Console.ReadLine(), out foundUserID))
+                {
+                    if (users.users.TryGetValue(foundUserID, out string foundUser))
+                    {
+                        Console.WriteLine($"User: {foundUser} found!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("User not found.");
+                    }
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid ID.");
+                }
+            }
+        }
+
+        public static void EditUser()
+        {
+            int editedUserID;
+
+            while (true)
+            {
+                Console.WriteLine("Please enter the ID of the user you would like to edit: ");
+                if (int.TryParse(Console.ReadLine(), out editedUserID))
+                {
+                    if (users.users.ContainsKey(editedUserID))
+                    {
+                        Console.WriteLine("Please enter the new name of the user: ");
+                        string newName = Console.ReadLine();
+                        users.users[editedUserID] = newName;
+                        Console.WriteLine("User updated successfully!");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("User ID not found. Please enter a valid ID.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid ID.");
+                }
+            }
+        }
+
+        public static void Exit()
+        {
+            Console.WriteLine("Exiting program... Goodbye!");
+            Environment.Exit(0);
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-// Can use a switch statement to call the methods based on the user's input
-
-
